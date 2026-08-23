@@ -79,7 +79,7 @@ The demo store lives in [`store/`](store/) — `node store/build.mjs a` builds t
 ## Deploy
 
 - **Dashboard** → Vercel (Next.js). Set `NEXT_PUBLIC_REPO_URL` to the repo for the "Pipeline →" link.
-- **Demo store** → separate Vercel project, root `store/`, build `node build.mjs a`.
+- **Demo store** → separate Vercel project, **Root Directory = `store/`**. It serves the prebuilt `store/public/` (no build step). To break/restore it for the demo: `npm run store:break` / `npm run store:fix`, then commit + push — Vercel redeploys the static files.
 
 ## AI disclosure
 

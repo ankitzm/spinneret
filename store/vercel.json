@@ -1,5 +1,5 @@
 {
   "cleanUrls": true,
-  "buildCommand": "node build.mjs a",
+  "buildCommand": "",
   "outputDirectory": "public"
 }

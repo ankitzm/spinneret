@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "pipeline": "node pipeline/run.mjs",
+    "store:break": "node store/build.mjs b",
+    "store:fix": "node store/build.mjs a",
     "test": "node --test pipeline/classify.test.mjs"
   },
   "dependencies": {
