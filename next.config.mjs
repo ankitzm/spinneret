@@ -1,1 +1,1 @@
-export default { output: "standalone", agentRules: false };
+export default { agentRules: false };

@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import historyFixture from "@/data/history.fixture.json";
 
 export type HistEvent = {
   at: string; source: string; status: string; verdict: string;
@@ -7,11 +8,14 @@ export type HistEvent = {
   deltas: { field: string; from: string; to: string }[];
 };
 
+// Same pattern as loadStatus: fixture is the bundled baseline, live CI data
+// overrides it when present. No dynamic path → no whole-project tracing.
 export async function loadHistory(): Promise<HistEvent[]> {
-  for (const f of ["data/history.json", "data/history.fixture.json"]) {
-    try { return JSON.parse(await readFile(join(process.cwd(), f), "utf8")); } catch {}
+  try {
+    return JSON.parse(await readFile(join(process.cwd(), "data/history.json"), "utf8"));
+  } catch {
+    return historyFixture as HistEvent[];
   }
-  return [];
 }
 
 // Plain-language narration of an event — the feed tells the story for the judges.

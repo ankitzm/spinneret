@@ -1,22 +1,21 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Status } from "./data";
+import statusFixture from "@/data/status.fixture.json";
 
-// Reads the fleet status. Prod (Vercel) has data/ committed into the build, so
-// a local file read is enough — the pipeline commits fresh JSON, Vercel
-// redeploys, the read picks it up. No GitHub API, no token needed.
-// Fixture fills in before the first real pipeline run.
+// Live pipeline data (data/status.json) is committed by CI and may not exist on
+// a fresh deploy, so the fixture is the guaranteed baseline (static import →
+// bundled, no filesystem tracing). At request time we try the live file by a
+// single literal path; a miss silently falls back to the fixture.
+async function tryRead(rel: string): Promise<unknown | null> {
+  try { return JSON.parse(await readFile(join(process.cwd(), rel), "utf8")); }
+  catch { return null; }
+}
+
 export async function loadStatus(): Promise<Status> {
-  for (const f of ["data/status.json", "data/status.fixture.json"]) {
-    try {
-      return JSON.parse(await readFile(join(process.cwd(), f), "utf8"));
-    } catch { /* try next */ }
-  }
-  return { updatedAt: "", badRowsShipped: 0, sources: [] };
+  return ((await tryRead("data/status.json")) as Status | null) ?? (statusFixture as Status);
 }
 
 export async function loadLatest(id: string): Promise<unknown | null> {
-  try {
-    return JSON.parse(await readFile(join(process.cwd(), "data", "latest", `${id}.json`), "utf8"));
-  } catch { return null; }
+  return tryRead(`data/latest/${id}.json`);
 }
