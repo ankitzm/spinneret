@@ -13,7 +13,7 @@ async function tryRead(rel: string): Promise<unknown | null> {
 }
 
 export async function loadStatus(): Promise<Status> {
-  return ((await tryRead("data/status.json")) as Status | null) ?? (statusFixture as Status);
+  return ((await tryRead("data/status.json")) as Status | null) ?? (statusFixture as unknown as Status);
 }
 
 export async function loadLatest(id: string): Promise<unknown | null> {

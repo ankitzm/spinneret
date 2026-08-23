@@ -31,12 +31,26 @@ async function bdata(args, timeoutMs = 180_000) {
 }
 
 // `bdata scraper run` prints a human summary then JSON; grab the JSON payload.
+// The payload starts at the first line beginning with [ or { .
 function parseRows(stdout) {
-  const start = stdout.search(/[[{]/);
-  if (start === -1) return [];
-  const data = JSON.parse(stdout.slice(start));
+  const m = stdout.match(/^[[{][\s\S]*$/m);
+  if (!m) return [];
+  const data = JSON.parse(m[0]);
   const rows = Array.isArray(data) ? data : data.data ?? data.results ?? [data];
-  return rows.filter(Boolean);
+  return rows.filter(Boolean).map(normalizeRow);
+}
+
+// Scraper Studio returns rich shapes: price as {value,currency,symbol}, the
+// scraped URL nested under input.url. Flatten to flat scalars so the classifier
+// (which compares String(field) and keys on row.url) sees stable values.
+function normalizeRow(row) {
+  const out = { ...row };
+  if (row?.input?.url && !out.url) out.url = row.input.url;
+  delete out.input;
+  for (const [k, v] of Object.entries(out)) {
+    if (v && typeof v === "object" && "value" in v) out[k] = v.value; // {value,currency,...} -> value
+  }
+  return out;
 }
 
 async function scrape(source) {
@@ -119,17 +133,48 @@ async function main() {
     }
   }
 
+  await mkdir(join(DATA, "latest"), { recursive: true });
+
+  // history first (status derives per-source run strips from it)
+  const histPath = join(DATA, "history.json");
+  let history = [];
+  try { history = JSON.parse(await readFile(histPath, "utf8")); } catch {}
+  const runNumber = history.filter((e) => e.source === sources[0]?.id).length + 1;
+  for (const r of results) {
+    history.unshift({ at: r.at, source: r.source, status: r.status, verdict: r.verdict,
+                      healed: !!r.healed, diff: r.diff ?? null,
+                      brokeFields: r.brokeFields ?? r.evidence?.fields ?? [], deltas: r.deltas ?? [] });
+  }
+  history = history.slice(0, 200);
+  await writeFile(histPath, JSON.stringify(history, null, 2));
+
+  // map a verdict to a run-strip cell
+  const cell = (v) => v === "HEALED" ? "healed" : v === "CHANGED" ? "changed"
+    : /BROKEN|FAILED|ERROR/.test(v) ? "broken" : "ok";
+  const stripFor = (id) =>
+    history.filter((e) => e.source === id).slice(0, 20).map((e) => cell(e.verdict)).reverse();
+
   // status.json: current fleet snapshot the dashboard reads
+  const cfgById = Object.fromEntries(sources.map((s) => [s.id, s]));
   const status = {
     updatedAt: now(),
-    sources: results.map((r) => ({
-      id: r.source, status: r.status, verdict: r.verdict,
-      rows: r.rows.length, healed: !!r.healed, diff: r.diff ?? null,
-      deltas: r.deltas ?? [], brokeFields: r.brokeFields ?? r.evidence?.fields ?? [],
-    })),
+    runNumber,
+    nextRunAt: null, // set by CI schedule; null renders "on push"
     badRowsShipped: 0, // by construction: BROKEN never ships downstream
+    sources: results.map((r) => {
+      const cfg = cfgById[r.source] ?? {};
+      const need = cfg.requiredFields?.length ?? 0;
+      return {
+        id: r.source, name: cfg.name ?? r.source, status: r.status, verdict: r.verdict,
+        rows: r.rows.length,
+        fieldsHealth: r.rows.length ? `${need}/${need}` : "0/" + need,
+        healed: !!r.healed, healedAt: r.healed ? r.at : undefined,
+        diff: r.diff ?? null, deltas: r.deltas ?? [],
+        brokeFields: r.brokeFields ?? r.evidence?.fields ?? [],
+        runHistory: stripFor(r.source),
+      };
+    }),
   };
-  await mkdir(join(DATA, "latest"), { recursive: true });
   await writeFile(join(DATA, "status.json"), JSON.stringify(status, null, 2));
 
   // per-source latest data (the downstream "product" — real structured output)
@@ -139,17 +184,6 @@ async function main() {
         JSON.stringify({ source: r.source, at: r.at, verdict: r.verdict, rows: r.rows }, null, 2));
     }
   }
-
-  // append to history (bounded; keep last 200 events)
-  const histPath = join(DATA, "history.json");
-  let history = [];
-  try { history = JSON.parse(await readFile(histPath, "utf8")); } catch {}
-  for (const r of results) {
-    history.unshift({ at: r.at, source: r.source, status: r.status, verdict: r.verdict,
-                      healed: !!r.healed, diff: r.diff ?? null,
-                      brokeFields: r.brokeFields ?? r.evidence?.fields ?? [], deltas: r.deltas ?? [] });
-  }
-  await writeFile(histPath, JSON.stringify(history.slice(0, 200), null, 2));
 
   const worst = status.sources.some((s) => s.status === "degraded") ? 2
     : status.sources.some((s) => s.status === "awaiting") ? 3 : 0;

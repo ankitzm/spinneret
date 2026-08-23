@@ -14,7 +14,7 @@ export async function loadHistory(): Promise<HistEvent[]> {
   try {
     return JSON.parse(await readFile(join(process.cwd(), "data/history.json"), "utf8"));
   } catch {
-    return historyFixture as HistEvent[];
+    return historyFixture as unknown as HistEvent[];
   }
 }
 

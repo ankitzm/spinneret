@@ -2,23 +2,28 @@
   {
     "id": "alto-store",
     "name": "Alto Mini (demo store)",
-    "collectorId": "REPLACE_WITH_COLLECTOR_ID",
+    "collectorId": "c_mt63yt141kkne9vb5t",
     "urls": [
       "https://spinneret-store.vercel.app/product/aurora-headphones",
       "https://spinneret-store.vercel.app/product/pulse-smartwatch",
       "https://spinneret-store.vercel.app/product/mute-earbuds",
       "https://spinneret-store.vercel.app/product/hub-usb-c-dock"
     ],
-    "requiredFields": ["name", "price"]
+    "requiredFields": [
+      "name",
+      "price"
+    ]
   },
   {
     "id": "keychron",
-    "name": "Keychron (real long-tail)",
-    "collectorId": "REPLACE_WITH_COLLECTOR_ID",
+    "name": "Keychron K8 Max (real long-tail)",
+    "collectorId": "c_mt64bsp01cmi7cpday",
     "urls": [
-      "https://www.keychron.com/products/keychron-k2-pro-wireless-mechanical-keyboard",
-      "https://www.keychron.com/products/keychron-q1-pro-qmk-via-wireless-custom-mechanical-keyboard"
+      "https://www.keychron.com/collections/all-keyboards/products/keychron-k8-max-qmk-wireless-mechanical-keyboard"
     ],
-    "requiredFields": ["name", "price"]
+    "requiredFields": [
+      "name",
+      "price"
+    ]
   }
 ]

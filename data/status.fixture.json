@@ -10,26 +10,26 @@
       "status": "healthy",
       "verdict": "HEALED",
       "rows": 4,
-      "fieldsHealth": "5/5",
+      "fieldsHealth": "2/2",
       "healed": true,
       "healedAt": "2026-08-23T14:09:00.000Z",
-      "diff": "Updated price selector from .product-price to .c-x9k2",
+      "diff": "Updated price selector from .product-price to .c-x9k2; rating from .product-rating to .c-stars-2",
       "brokeFields": ["price", "rating"],
       "deltas": [],
       "runHistory": ["ok","ok","ok","ok","ok","ok","broken","healed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"]
     },
     {
       "id": "keychron",
-      "name": "Keychron (real long-tail)",
+      "name": "Keychron K8 Max (real long-tail)",
       "status": "healthy",
       "verdict": "CHANGED",
-      "rows": 2,
+      "rows": 1,
       "fieldsHealth": "2/2",
       "healed": false,
       "diff": null,
       "brokeFields": [],
       "deltas": [
-        { "key": "keychron-k2-pro", "field": "price", "from": "94", "to": "89" }
+        { "key": "keychron-k8-max", "field": "price", "from": "94", "to": "86" }
       ],
       "runHistory": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","changed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"]
     }
