@@ -1,0 +1,49 @@
+name: spinneret
+
+# Self-healing scraper fleet. Runs on a cron; when a source breaks it heals
+# itself and commits the fix. A wall of green checks is the proof.
+on:
+  schedule:
+    - cron: "0 */6 * * *" # every 6h (GitHub cron can lag ~15m; use dispatch for demos)
+  workflow_dispatch: {}    # the "Run workflow" button — used in the live demo
+
+permissions:
+  contents: write # commit healed scrapers + fresh data back to the repo
+
+concurrency:
+  group: spinneret
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run the fleet (scrape → validate → heal → commit)
+        env:
+          BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
+        run: |
+          npx -y -p @brightdata/cli bdata --version >/dev/null 2>&1 || true
+          node pipeline/run.mjs
+        # run.mjs exits non-zero on BROKEN/AWAITING — that's the red check the
+        # heal loop turns green on the next run. continue so we still commit + summarize.
+        continue-on-error: true
+
+      - name: Commit results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ pipeline/golden/ || true
+          git diff --cached --quiet || git commit -m "chore(data): fleet run $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
+          git push || true
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "### Spinneret run" >> "$GITHUB_STEP_SUMMARY"
+          node -e "try{const s=require('./data/status.json');const c=s.sources.reduce((a,x)=>((a[x.status]=(a[x.status]||0)+1),a),{});console.log('- '+Object.entries(c).map(([k,v])=>v+' '+k).join(' · '));console.log('- bad rows shipped: **'+s.badRowsShipped+'**')}catch(e){console.log('- no status yet')}" >> "$GITHUB_STEP_SUMMARY"

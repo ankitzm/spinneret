@@ -6,10 +6,10 @@ node_modules/
 *.log
 .DS_Store
 
-# pipeline writes these in CI; fixtures are the committed dev fallback
-/data/status.json
-/data/history.json
-/data/latest/
+# NOTE: data/status.json, data/history.json, data/latest/, pipeline/golden/ are
+# committed by CI (they are the dashboard's state + the deliverable). Locally,
+# `npm run pipeline` writes them; don't hand-edit. The *.fixture.json files are
+# the checked-in dev fallback used before the first real run.
 
 # next.js generated
 next-env.d.ts
