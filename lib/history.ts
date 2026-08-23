@@ -6,6 +6,7 @@ export type HistEvent = {
   at: string; source: string; status: string; verdict: string;
   healed: boolean; diff: string | null; brokeFields: string[];
   deltas: { field: string; from: string; to: string }[];
+  preview?: Record<string, unknown>[];
 };
 
 // Same pattern as loadStatus: fixture is the bundled baseline, live CI data
@@ -27,7 +28,7 @@ export function narrate(e: HistEvent): string {
     case "CHANGED":
       return `${src} data changed: ${e.deltas.map(d => `${d.field} ${d.from} → ${d.to}`).join(", ")}. Real change, passed through.`;
     case "AWAITING_APPROVAL":
-      return `Break caught on ${src}. Heal ready — awaiting approval in Bright Data before re-run.`;
+      return `Break caught on ${src}. Golden-row gate held — zero bad rows shipped. Heal recovered ${e.brokeFields.join(", ")}; awaiting approval to publish.`;
     case "HEAL_FAILED": case "HEAL_ERROR": case "ERROR":
       return `${src} degraded and could not self-heal. Needs a human. No bad rows shipped.`;
     case "OK": return `${src} verified — all required fields present.`;

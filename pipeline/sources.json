@@ -12,7 +12,14 @@
     "requiredFields": [
       "name",
       "price"
-    ]
+    ],
+    "healHints": {
+      "name": "the product title, the large heading text near the top of the product (e.g. 'Aurora Wireless Headphones')",
+      "price": "the price, shown as a dollar amount like '$129' next to the title",
+      "rating": "the numeric rating shown near the price, a value like '4.6'",
+      "description": "the paragraph of body text describing the product",
+      "image_url": "the src of the main product image"
+    }
   },
   {
     "id": "keychron",

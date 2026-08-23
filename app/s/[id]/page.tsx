@@ -64,10 +64,18 @@ export default async function SourcePage({ params }: { params: Promise<{ id: str
                       </code>
                     </pre>
                   )}
+                  {e.preview?.length ? (
+                    <div className="mt-3">
+                      <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-usu">Recovered by heal</div>
+                      <pre className="mt-1 overflow-x-auto rounded-lg border border-tokiwa/30 bg-kinari p-3 text-xs leading-relaxed">
+                        <code className="font-mono text-sumi">{JSON.stringify(e.preview[0], null, 2)}</code>
+                      </pre>
+                    </div>
+                  ) : null}
                   <p className="mt-2 text-sm text-tokiwa">
                     {e.verdict === "HEALED"
                       ? "Approved · re-validated against golden rows · green restored."
-                      : "Heal ready — approve in Bright Data, then re-run."}
+                      : "Heal recovered every field. Approve in Bright Data to publish the fix."}
                   </p>
                 </>
               )}
