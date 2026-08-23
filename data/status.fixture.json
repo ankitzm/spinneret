@@ -1,0 +1,37 @@
+{
+  "updatedAt": "2026-08-23T14:09:00.000Z",
+  "runNumber": 47,
+  "nextRunAt": "2026-08-23T18:00:00.000Z",
+  "badRowsShipped": 0,
+  "sources": [
+    {
+      "id": "alto-store",
+      "name": "Alto Mini (demo store)",
+      "status": "healthy",
+      "verdict": "HEALED",
+      "rows": 4,
+      "fieldsHealth": "5/5",
+      "healed": true,
+      "healedAt": "2026-08-23T14:09:00.000Z",
+      "diff": "Updated price selector from .product-price to .c-x9k2",
+      "brokeFields": ["price", "rating"],
+      "deltas": [],
+      "runHistory": ["ok","ok","ok","ok","ok","ok","broken","healed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"]
+    },
+    {
+      "id": "keychron",
+      "name": "Keychron (real long-tail)",
+      "status": "healthy",
+      "verdict": "CHANGED",
+      "rows": 2,
+      "fieldsHealth": "2/2",
+      "healed": false,
+      "diff": null,
+      "brokeFields": [],
+      "deltas": [
+        { "key": "keychron-k2-pro", "field": "price", "from": "94", "to": "89" }
+      ],
+      "runHistory": ["ok","ok","ok","ok","ok","ok","ok","ok","ok","changed","ok","ok","ok","ok","ok","ok","ok","ok","ok","ok"]
+    }
+  ]
+}

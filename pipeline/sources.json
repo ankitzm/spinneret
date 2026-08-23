@@ -1,0 +1,24 @@
+[
+  {
+    "id": "alto-store",
+    "name": "Alto Mini (demo store)",
+    "collectorId": "REPLACE_WITH_COLLECTOR_ID",
+    "urls": [
+      "https://spinneret-store.vercel.app/product/aurora-headphones",
+      "https://spinneret-store.vercel.app/product/pulse-smartwatch",
+      "https://spinneret-store.vercel.app/product/mute-earbuds",
+      "https://spinneret-store.vercel.app/product/hub-usb-c-dock"
+    ],
+    "requiredFields": ["name", "price"]
+  },
+  {
+    "id": "keychron",
+    "name": "Keychron (real long-tail)",
+    "collectorId": "REPLACE_WITH_COLLECTOR_ID",
+    "urls": [
+      "https://www.keychron.com/products/keychron-k2-pro-wireless-mechanical-keyboard",
+      "https://www.keychron.com/products/keychron-q1-pro-qmk-via-wireless-custom-mechanical-keyboard"
+    ],
+    "requiredFields": ["name", "price"]
+  }
+]
