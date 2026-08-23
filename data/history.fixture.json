@@ -1,0 +1,7 @@
+[
+  { "at": "2026-08-23T14:09:00.000Z", "source": "alto-store", "status": "healthy", "verdict": "HEALED", "healed": true, "diff": "Updated price selector from .product-price to .c-x9k2; rating from .product-rating to .c-stars-2", "brokeFields": ["price", "rating"], "deltas": [] },
+  { "at": "2026-08-23T13:50:00.000Z", "source": "keychron", "status": "healthy", "verdict": "CHANGED", "healed": false, "diff": null, "brokeFields": [], "deltas": [{ "field": "price", "from": "94", "to": "89" }] },
+  { "at": "2026-08-23T08:00:00.000Z", "source": "alto-store", "status": "healthy", "verdict": "OK", "healed": false, "diff": null, "brokeFields": [], "deltas": [] },
+  { "at": "2026-08-23T08:00:00.000Z", "source": "keychron", "status": "healthy", "verdict": "OK", "healed": false, "diff": null, "brokeFields": [], "deltas": [] },
+  { "at": "2026-08-23T02:00:00.000Z", "source": "alto-store", "status": "healthy", "verdict": "OK", "healed": false, "diff": null, "brokeFields": [], "deltas": [] }
+]

@@ -5,3 +5,13 @@ node_modules/
 .vercel/
 *.log
 .DS_Store
+
+# pipeline writes these in CI; fixtures are the committed dev fallback
+/data/status.json
+/data/history.json
+/data/latest/
+
+# next.js generated
+next-env.d.ts
+/CLAUDE.md
+/AGENTS.md

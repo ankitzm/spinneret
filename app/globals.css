@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Japanese traditional palette — nipponcolors. One accent (ai indigo),
+   status color is the only other strong color on the page. */
+@theme {
+  --color-kinari: #fbfaf5;      /* 生成り washi page */
+  --color-panel: #ffffff;
+  --color-line: #e0e0dc;        /* 白鼠 shironezu border */
+  --color-sumi: #1c1c1a;        /* 墨 ink */
+  --color-nibi: #727171;        /* 鈍色 secondary */
+  --color-usu: #a8a6a0;         /* 薄鈍 tertiary */
+  --color-ai: #165e83;          /* 藍 indigo — the one accent */
+  --color-tokiwa: #007b43;      /* 常磐 healthy */
+  --color-kohaku: #9a6425;      /* 琥珀 healing */
+  --color-akane: #b7282e;       /* 茜 degraded */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html { color-scheme: light; }
+body { background: var(--color-kinari); color: var(--color-sumi); }
+
+/* healing pulse — motivated: signals live in-flight work. Reduced-motion safe. */
+@keyframes breathe { 0%,100% { opacity: 1 } 50% { opacity: .45 } }
+.animate-breathe { animation: breathe 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe { animation: none; }
+  * { transition: none !important; }
+}
