@@ -20,6 +20,13 @@
 html { color-scheme: light; }
 body { background: var(--color-kinari); color: var(--color-sumi); }
 
+/* Visible keyboard focus on every interactive element (a11y). */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--color-ai);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* healing pulse — motivated: signals live in-flight work. Reduced-motion safe. */
 @keyframes breathe { 0%,100% { opacity: 1 } 50% { opacity: .45 } }
 .animate-breathe { animation: breathe 1.6s ease-in-out infinite; }
