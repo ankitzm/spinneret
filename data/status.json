@@ -1,0 +1,38 @@
+{
+  "updatedAt": "2026-08-24T00:42:39.736Z",
+  "runNumber": 1,
+  "nextRunAt": null,
+  "badRowsShipped": 0,
+  "sources": [
+    {
+      "id": "alto-store",
+      "name": "Alto Mini (demo store)",
+      "status": "degraded",
+      "verdict": "ERROR",
+      "rows": 0,
+      "fieldsHealth": "0/2",
+      "healed": false,
+      "diff": null,
+      "deltas": [],
+      "brokeFields": [],
+      "runHistory": [
+        "broken"
+      ]
+    },
+    {
+      "id": "keychron",
+      "name": "Keychron K8 Max (real long-tail)",
+      "status": "degraded",
+      "verdict": "ERROR",
+      "rows": 0,
+      "fieldsHealth": "0/2",
+      "healed": false,
+      "diff": null,
+      "deltas": [],
+      "brokeFields": [],
+      "runHistory": [
+        "broken"
+      ]
+    }
+  ]
+}
