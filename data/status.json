@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-08-26T12:31:27.687Z",
-  "runNumber": 11,
+  "updatedAt": "2026-08-26T19:39:11.927Z",
+  "runNumber": 12,
   "nextRunAt": null,
   "badRowsShipped": 0,
   "sources": [
@@ -26,6 +26,7 @@
         "broken",
         "broken",
         "broken",
+        "broken",
         "broken"
       ]
     },
@@ -41,6 +42,7 @@
       "deltas": [],
       "brokeFields": [],
       "runHistory": [
+        "broken",
         "broken",
         "broken",
         "broken",
