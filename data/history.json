@@ -1,5 +1,25 @@
 [
   {
+    "at": "2026-09-06T01:59:57.734Z",
+    "source": "keychron",
+    "status": "degraded",
+    "verdict": "ERROR",
+    "healed": false,
+    "diff": null,
+    "brokeFields": [],
+    "deltas": []
+  },
+  {
+    "at": "2026-09-06T01:59:57.732Z",
+    "source": "alto-store",
+    "status": "degraded",
+    "verdict": "ERROR",
+    "healed": false,
+    "diff": null,
+    "brokeFields": [],
+    "deltas": []
+  },
+  {
     "at": "2026-09-05T19:43:27.685Z",
     "source": "keychron",
     "status": "degraded",
