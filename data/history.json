@@ -1,5 +1,25 @@
 [
   {
+    "at": "2026-10-10T20:53:31.665Z",
+    "source": "keychron",
+    "status": "degraded",
+    "verdict": "ERROR",
+    "healed": false,
+    "diff": null,
+    "brokeFields": [],
+    "deltas": []
+  },
+  {
+    "at": "2026-10-10T20:53:31.663Z",
+    "source": "alto-store",
+    "status": "degraded",
+    "verdict": "ERROR",
+    "healed": false,
+    "diff": null,
+    "brokeFields": [],
+    "deltas": []
+  },
+  {
     "at": "2026-10-10T16:37:10.474Z",
     "source": "keychron",
     "status": "degraded",
@@ -1971,26 +1991,6 @@
   },
   {
     "at": "2026-09-14T11:16:12.989Z",
-    "source": "alto-store",
-    "status": "degraded",
-    "verdict": "ERROR",
-    "healed": false,
-    "diff": null,
-    "brokeFields": [],
-    "deltas": []
-  },
-  {
-    "at": "2026-09-14T02:27:25.775Z",
-    "source": "keychron",
-    "status": "degraded",
-    "verdict": "ERROR",
-    "healed": false,
-    "diff": null,
-    "brokeFields": [],
-    "deltas": []
-  },
-  {
-    "at": "2026-09-14T02:27:25.772Z",
     "source": "alto-store",
     "status": "degraded",
     "verdict": "ERROR",
